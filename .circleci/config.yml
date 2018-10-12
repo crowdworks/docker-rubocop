@@ -1,0 +1,17 @@
+version: 2
+
+workflows:
+  version: 2
+  static_analysis:
+    jobs:
+      - lint_dockerfile
+
+jobs:
+  # Lint Dockerfile by hadolint https://github.com/hadolint/hadolint
+  lint_dockerfile:
+    docker:
+      # Because `latest` image does not contain a shell, it uses Debian image.
+      - image: hadolint/hadolint:latest-debian
+    steps:
+      - checkout
+      - run: hadolint Dockerfile
